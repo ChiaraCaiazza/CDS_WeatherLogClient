@@ -1,0 +1,193 @@
+/******************************************************************************
+
+    Created on : 22-feb-2016, 21.26.18
+    Author     : ChiaraCaiazza
+    Author     : GionatanGallo
+
+*******************************************************************************/
+
+
+
+/*******************************************************************************
+                    Style related to the main window
+*******************************************************************************/
+
+/* style related to the root background*/
+#backgroundStyle_root, #backgroundStyle_popup
+{
+   -fx-background-image:    url("images/background_root.png");
+}
+
+/* style related to the data GridPane*/
+.backgroundStyle_data
+{
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* style related to the city column background*/
+.backgroundStyle_cityColumn
+{
+    -fx-background-color: rgba( 0, 0, 0, 0.40);
+}
+
+/* style related to the response column background*/
+.backgroundStyle_responseColumn
+{  
+    -fx-background-color: rgba(0, 0, 0, 0.25);
+}
+
+/* style related to the navigation  window*/
+.navigationBar
+{
+    -fx-min-width:          100%;
+    -fx-min-height:         28;
+    -fx-max-height:         28;
+}
+
+/* style related to the application title*/
+.applicationTitle
+{
+    -fx-min-height:         150;
+    -fx-max-height:         150;
+}
+
+/* style related to the popup window*/
+/*#popupText
+{
+    -fx-font:               20px Calibri;
+    -fx-fill:               #208203;
+}
+
+/* style related to the text of the home data pane*/
+.homeText
+{
+    -fx-font:               30px Calibri;
+    -fx-fill:               #c0c0c0;
+}
+
+/* style related to the bold text of the home data pane*/
+.homeTextBold
+{
+    -fx-font:               30px Calibri;
+    -fx-fill:               #c0c0c0;
+    -fx-font-weight:        BOLD;
+}
+
+/* style related to the text contained into the city column*/
+.cityText
+{
+    -fx-font:               30px Calibri;
+    -fx-font-weight:        BOLD;
+    -fx-text-fill:          #c0c0c0;
+}
+
+/* style related to the two choiceBox*/
+#typeComboBoxStyle
+{
+    -fx-min-width:          200px;
+    -fx-max-width:          200px;    
+    -fx-background-color:   #f4fffc;
+}
+
+/*style for the button*/
+#buttonStyle
+{
+    -fx-min-width:          102px;
+    -fx-max-width:          102px;
+    -fx-font:               12px Calibri;
+    -fx-font-weight:        BOLD;
+    -fx-text-fill:          black;
+}
+
+/*style related to small button*/
+#smallAddButtonStyle, #smallRemoveButtonStyle
+{
+    -fx-min-width:          80px;
+    -fx-max-width:          80px; 
+    -fx-font:               12px Calibri;
+    -fx-font-weight:        BOLD;
+    -fx-text-fill:          black; 
+}
+
+/*Style related to the cityListView*/
+#cityListViewStyle
+{
+    -fx-background-color:   #f4fffc;
+    -fx-max-height:         110;
+    -fx-max-height:         110;
+    -fx-max-width:          185;
+    -fx-max-width:          185;
+}
+
+
+
+/*******************************************************************************
+                  Style related to the Tab
+*******************************************************************************/
+
+/* style related to the root background*/
+#backgroundStyle_Tab
+{
+   -fx-font-size :          18;
+   -fx-font-weight:         bold;
+}
+
+/*style related to the textual tab*/
+#cityTitle
+{
+    -fx-font:               60px Calibri;
+    -fx-fill:               #808080;
+}
+
+
+
+/*******************************************************************************
+                  Style related to the Graph
+*******************************************************************************/
+
+.chart-title 
+{
+  -fx-text-fill:            #462300;
+  -fx-font-size:            3em;
+  -fx-font-weight:          bolder;
+}
+
+.chart-plot-background 
+{
+    -fx-background-color:    #e2ecfe;
+}
+
+.chart-vertical-grid-lines
+{
+    -fx-stroke:              #3278fa;
+}
+
+.chart-horizontal-grid-lines
+{
+    -fx-stroke:             #3278fa;
+}
+
+.axis 
+{
+    -fx-font-size:          50;    
+    -fx-tick-label-fill:    #914800;
+    -fx-font-family:        Tahoma;
+    -fx-tick-length:        20;
+    -fx-minor-tick-length:  10;
+}
+ 
+.axis-label 
+{
+   -fx-text-fill:           #462300; 
+   -fx-font-size:           20;
+}
+
+.axis-tick-mark 
+{
+    -fx-stroke:             black;
+    -fx-stroke-width:       2; 
+}
+.axis-minor-tick-mark 
+{
+    -fx-stroke:             black;
+}
