@@ -473,14 +473,14 @@ public class InsertGraph
                         newPoint=calendar.get(Calendar.HOUR_OF_DAY)+":00"; 
                         break;
                         
-                    case "m":
+                    case "w":
                         //day, month, hour are required
                         newPoint=calendar.get(Calendar.DAY_OF_MONTH)+"/"
                                        +(calendar.get(Calendar.MONTH)+1)+" h"
                                        +calendar.get(Calendar.HOUR_OF_DAY);
                         break;
                         
-                    case "w":
+                    case "m":
                         //day, month  are required
                         newPoint=calendar.get(Calendar.DAY_OF_MONTH)+"/"
                                    +(calendar.get(Calendar.MONTH)+1);
@@ -494,6 +494,7 @@ public class InsertGraph
                 //add them to the serie            
                 series.getData().add(new XYChart.Data(newPoint, 
                                  thisValue));
+                System.out.println("Punto - "+ newPoint + "-" +thisValue);
             }
         }
         lineChart.getData().add(series);
