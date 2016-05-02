@@ -75,6 +75,7 @@ public class WeatherLogClient extends Application
         //set the minimum windows size allowed
         primaryStage.setMinWidth(750);
         primaryStage.setMinHeight(550);
+        primaryStage.setWidth(1200);
         primaryStage.show();
         
         //initialize the content of the root grid adding 3 row and 3 column

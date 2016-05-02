@@ -52,10 +52,10 @@
 }
 
 /* style related to the popup window*/
-/*#popupText
+#popupText
 {
     -fx-font:               20px Calibri;
-    -fx-fill:               #208203;
+    -fx-fill:               #c0c0c0;
 }
 
 /* style related to the text of the home data pane*/
