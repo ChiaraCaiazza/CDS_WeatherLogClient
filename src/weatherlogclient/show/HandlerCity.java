@@ -30,7 +30,7 @@ public class HandlerCity
     public HandlerCity(Stage stage, GridPane gridPane)
     {
         INSERT_TEXT_TAB=new InsertTextTab();
-        INSERTGRAPH=new InsertGraph();
+        INSERTGRAPH=new InsertGraph(stage);
         UTIL=new UtilCity();
         
         primaryStage=stage;
