@@ -12,11 +12,15 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Side;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 
 
@@ -24,11 +28,12 @@ import javafx.scene.chart.XYChart;
 public class InsertGraph 
 {
     private final UtilCity UTIL;
+    private final Stage root;
     
-    
-    public InsertGraph()
+    public InsertGraph(Stage stage)
     {
         UTIL=new UtilCity();
+        root=stage;
     }
     
     
@@ -67,8 +72,24 @@ public class InsertGraph
         StackedBarChart<String,Number> barChart = new StackedBarChart<>(xAxis,yAxis);
         barChart.setTitle(UTIL.onlyFirstUp(propertyName));
         //barChart.setCategoryGap(60);
-        barChart.setPrefSize(600,300);
+        barChart.getStyleClass().add("chartStyle");
         barChart.setLegendSide(Side.RIGHT);
+        
+        //optimize the translateX property
+        updateTranslateX(null, barChart);
+        //optimize the translateY property
+        updateTranslateY(null, barChart);
+        
+        //when the window width change optimize the translateX property
+        root.widthProperty().addListener((obs)->
+        {
+            Platform.runLater(()->updateTranslateX(null, barChart));
+        });
+        //when the window height change optimize the translateY property
+        root.heightProperty().addListener((obs)->
+        {
+            Platform.runLater(()->updateTranslateY(null, barChart));
+        });
         
         //for each city
         for (int i=0; i<allCityMeasurements.size(); i++)
@@ -158,39 +179,47 @@ public class InsertGraph
      */
     protected void createLineGraphTabMultipleCity(String propertyName,
                                  String propertyUnit,HandlerCity thisCityHandler,
-                                 LinkedList<LinkedList> allCityMeasurements, String reqType)
+                                 LinkedList<LinkedList> allCityMeasurements, 
+                                 String reqType)
     {
         LinkedList<HashMap> measurements;
         HashMap <String, String> singleMeasure;
         String s;
         Integer hour, day, month;
+        double interval;
+        HashMap<String,Double> bounds;
         ObservableList<String> xValuesTemp, xValues;
         Calendar c;
         long millisecond;
         
         
-       //Tab initialization
-       thisCityHandler.initTab(propertyName);
-         
-         
-       c= Calendar.getInstance();
-       c.getTime();
-       xValuesTemp= FXCollections.observableArrayList(); 
-       xValues= FXCollections.observableArrayList();
-       
-       switch (reqType)
-       { 
-           case "d":
-           
-                for (int i=0; i<24; i++)
-                {                
+        bounds=new HashMap<>();
+        searchMinMax(propertyName, allCityMeasurements, bounds);
+        interval=(bounds.get("upperBound")+(bounds.get("upperBound")*10/100))-
+                (bounds.get("lowerBound")-(bounds.get("lowerBound")*10/100));
+        
+        //Tab initialization
+        thisCityHandler.initTab(propertyName);
+
+
+        c= Calendar.getInstance();
+        c.getTime();
+        xValuesTemp= FXCollections.observableArrayList(); 
+        xValues= FXCollections.observableArrayList();
+
+        switch (reqType)
+        { 
+            case "d":
+
+                 for (int i=0; i<24; i++)
+                 {                
 
 
                     hour=c.get(Calendar.HOUR_OF_DAY);
                     day = c.get(Calendar.DAY_OF_MONTH);
                     month = c.get(Calendar.MONTH)+1;
 
-                    xValuesTemp.add(day+"/"+month+" h"+hour);
+                    xValuesTemp.add(hour+":00");
                     millisecond = c.getTimeInMillis();
                     millisecond-=60*60*1000;
                     c.setTimeInMillis(millisecond);
@@ -236,14 +265,36 @@ public class InsertGraph
                 
         //create x and y axis
         final CategoryAxis xAxis = new CategoryAxis();
-        final NumberAxis yAxis = new NumberAxis();
+        final NumberAxis yAxis = new NumberAxis(
+                     bounds.get("lowerBound")-(bounds.get("lowerBound")*10/100),
+                     bounds.get("upperBound")+(bounds.get("upperBound")*10/100),
+                     interval/10);
+        
         yAxis.setLabel(propertyUnit);
         xAxis.setLabel(propertyName);
-        
         xAxis.setCategories(xValues); 
+        
        
         //creating the chart
         final LineChart<String,Number> lineChart = new LineChart<>(xAxis,yAxis);
+        lineChart.getStyleClass().add("chartStyle");
+        
+        //optimize the translateX property
+        updateTranslateX(lineChart, null);
+        //optimize the translateY property
+        updateTranslateY(lineChart, null);
+        
+        //when the window width change optimize the translateX property
+        root.widthProperty().addListener((obs)->
+        {
+            Platform.runLater(()->updateTranslateX(lineChart, null));
+        });
+        //when the window height change optimize the translateY property
+        root.heightProperty().addListener((obs)->
+        {
+            Platform.runLater(()->updateTranslateY(lineChart, null));
+        });
+       
         lineChart.setTitle(UTIL.onlyFirstUp(propertyName));
         lineChart.setPrefSize(600,300);
         lineChart.setLegendSide(Side.RIGHT);
@@ -262,16 +313,114 @@ public class InsertGraph
             //draw a single line
             insertASingleLineSerieMultipleCity(lineChart,i, propertyName, s,
                                                allCityMeasurements, reqType);
+        
+           
         }
-       
+        
+        
         //append
         thisCityHandler.newPane.getChildren().add(lineChart);
     }
     
+    private void updateTranslateX(LineChart lineChart, StackedBarChart barChart)
+    {
+        double xSpace;
+        
+        //the available white space
+        xSpace=(root.getWidth()*90/100)-1000;
+        
+        // if some white space is available translate the graph
+        if (xSpace>0)
+        {
+            if (lineChart!=null)
+                lineChart.setTranslateX(xSpace/2);
+            else
+                barChart.setTranslateX(xSpace/2);
+        }
+        else
+        {
+            if (lineChart!=null)
+                lineChart.setTranslateX(0);   
+            else
+                barChart.setTranslateX(0);
+        }
+    }
+    
+    private void updateTranslateY(LineChart lineChart, StackedBarChart barChart)
+    {
+        double ySpace; 
+        
+        //the available white space
+        ySpace = (root.getHeight()*95/100) - 180 - 350;
+               
+        // if some white space is available translate the graph
+        if (ySpace>0)
+        {
+            if (lineChart!=null)
+                lineChart.setTranslateY(ySpace/2);
+            else
+                barChart.setTranslateY(ySpace/2);
+        }
+        else
+        {
+            if (lineChart!=null)
+                lineChart.setTranslateY(0);
+            else
+                barChart.setTranslateY(0);
+        }
+    }
+    
+    private void searchMinMax(String propertyName,
+                              LinkedList<LinkedList> allCityMeasurements, 
+                              HashMap<String,Double> bounds)
+    {
+        LinkedList<HashMap> measures;
+        HashMap<String,String> measure;
+        String value;
+        
+        for(int i=0; i<allCityMeasurements.size();i++)
+        {
+            //all reguarding the i-th city
+            measures=allCityMeasurements.get(i);
+        
+        
+            //for each measure of this city 
+           for (int j=measures.size()-1;j>=0 ;j--)
+           {
+               //take the measurement
+               measure=measures.get(j);
+
+               //retrieve the data
+               value=measure.get(propertyName);
+               
+               //if i don't search for this particular value then i can continue
+               if (value==null) continue;
+                
+                value=UTIL.retrieveBefore(value,"_" );
+                value=UTIL.retrieveAfter(value, " ");
+                
+                double thisValue=Double.parseDouble(value.replace(",", "."));
+                
+                if (bounds.size() ==0)
+                {
+                    bounds.put("lowerBound", thisValue);
+                    bounds.put("upperBound", thisValue);
+                }
+                if (bounds.get("lowerBound")> thisValue )
+                    bounds.put("lowerBound", thisValue);
+                if ( bounds.get("upperBound") < thisValue )
+                    bounds.put("upperBound", thisValue);
+                
+            }
+        
+        }
+   
+    }
     
     protected void insertASingleLineSerieMultipleCity(LineChart<String, Number> lineChart, 
                                      int i, String propertyName, String cityName,
-                                     LinkedList<LinkedList> allCityMeasurements, String reqType)
+                                     LinkedList<LinkedList> allCityMeasurements, String reqType
+                                     )
     {
         LinkedList<HashMap> measures;
         HashMap<String,String> measure;
@@ -317,23 +466,34 @@ public class InsertGraph
                 }
                 
                 //x label
-                if (reqType!="m")
+                switch (reqType)
                 {
-                    //day, month, hour are required
-                    newPoint=calendar.get(Calendar.DAY_OF_MONTH)+"/"
-                                   +(calendar.get(Calendar.MONTH)+1)+" h"
-                                   +calendar.get(Calendar.HOUR_OF_DAY);
-                }
-                else
-                {
-                    //day, month  are required
-                    newPoint=calendar.get(Calendar.DAY_OF_MONTH)+"/"
+                    case "d":
+                        //only hour and minutes are required
+                        newPoint=calendar.get(Calendar.HOUR_OF_DAY)+":00"; 
+                        break;
+                        
+                    case "m":
+                        //day, month, hour are required
+                        newPoint=calendar.get(Calendar.DAY_OF_MONTH)+"/"
+                                       +(calendar.get(Calendar.MONTH)+1)+" h"
+                                       +calendar.get(Calendar.HOUR_OF_DAY);
+                        break;
+                        
+                    case "w":
+                        //day, month  are required
+                        newPoint=calendar.get(Calendar.DAY_OF_MONTH)+"/"
                                    +(calendar.get(Calendar.MONTH)+1);
+                        break;
+                        
+                    default:
                 }
-                 
+                double thisValue=Double.parseDouble(value.replace(",", "."));
+                
+                
                 //add them to the serie            
                 series.getData().add(new XYChart.Data(newPoint, 
-                                  Double.parseDouble(value.replace(",", "."))));
+                                 thisValue));
             }
         }
         lineChart.getData().add(series);
