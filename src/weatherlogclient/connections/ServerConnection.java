@@ -8,6 +8,7 @@ package weatherlogclient.connections;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,6 +19,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -32,6 +34,9 @@ public class ServerConnection
     public ServerConnection()
     {
         PATH="http://weatherlogserver-weatherlog.rhcloud.com/rest/";
+        //PATH="http://localhost:8080/WeatherLogServer/webresources/";
+        
+        
     }
     
     
@@ -83,6 +88,6 @@ public class ServerConnection
             transformer.transform(new DOMSource(doc),
                     new StreamResult(new OutputStreamWriter(System.out, "UTF-8")));
         } 
-        catch (Exception e) {}
+        catch (IllegalArgumentException | UnsupportedEncodingException | TransformerException e) {}
     }
 }

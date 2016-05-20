@@ -21,6 +21,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 
 
@@ -270,6 +271,7 @@ public class InsertGraph
                      bounds.get("upperBound")+(bounds.get("upperBound")*10/100),
                      interval/10);
         
+      
         yAxis.setLabel(propertyUnit);
         xAxis.setLabel(propertyName);
         xAxis.setCategories(xValues); 
