@@ -31,7 +31,7 @@ public class ServerConnection
     
     public ServerConnection()
     {
-        PATH="http://localhost:8080/WeatherLogServer/webresources/";
+        PATH="http://weatherlogserver-weatherlog.rhcloud.com/rest/";
     }
     
     
