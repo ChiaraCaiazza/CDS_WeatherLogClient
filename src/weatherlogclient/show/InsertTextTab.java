@@ -167,7 +167,7 @@ public class InsertTextTab
         
         if ("date".equals(name))
         {
-            simpleDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            simpleDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
             calendar=Calendar.getInstance();
             try 
             {
@@ -179,6 +179,7 @@ public class InsertTextTab
                                                                     null, ex);
             }
             
+            //calendar.add(Calendar.HOUR_OF_DAY, 7);
             
             text1.setText(name+" "+calendar.get(Calendar.DAY_OF_MONTH)+"/"+
                     (calendar.get(Calendar.MONTH)+1)+"/"+calendar.get(Calendar.YEAR)
