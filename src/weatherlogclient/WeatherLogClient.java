@@ -11,7 +11,6 @@ import java.io.File;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -93,6 +92,7 @@ public class WeatherLogClient extends Application
         navigationPane= new Pane();
         titlePane=new Pane();
         dataPane=new GridPane();
+        
         //initialize all the elements into the homeGridPane
         INIT_ELEMENTS.initializeStartingPane(homeGridPane, navigationPane,
                                              titlePane,dataPane, citiesNameList,
@@ -116,12 +116,7 @@ public class WeatherLogClient extends Application
         launch(args);
     }
     
-    
-    /***************************************************************************
-     * 
-     * apply css property 
-     * 
-    ***************************************************************************/
+
     private void applycss()
     {        
         homeGridPane.setId("backgroundStyle_root");
