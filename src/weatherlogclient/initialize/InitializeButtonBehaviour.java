@@ -24,11 +24,10 @@ public class InitializeButtonBehaviour
     private final ServerConnection CONNECT;
     private final SetRequest CONNECTION_PATH;
     private final AnalizeDocumentReceived ANALIZED_DOCUMENT;
-    private  HandlerCity HANDLE_CITY;
+    private final LinkedList<LinkedList> CITY_MEASURE;
+    private final Stage PRIMARY_STAGE;
+    private HandlerCity handle_city;
     private Document receivedDocument;
-    private final LinkedList<LinkedList> cityMeasure;
-    
-    private final Stage primaryStage;
     
     
     public InitializeButtonBehaviour(Stage stage)
@@ -37,9 +36,9 @@ public class InitializeButtonBehaviour
         CONNECTION_PATH = new SetRequest();
         ANALIZED_DOCUMENT = new AnalizeDocumentReceived();
         
-        cityMeasure = new LinkedList<>();   
+        CITY_MEASURE = new LinkedList<>();   
         
-        primaryStage=stage;
+        PRIMARY_STAGE=stage;
     }
     
     
@@ -68,14 +67,14 @@ public class InitializeButtonBehaviour
         Pane oldData;
         
         //init an handler city object
-        HANDLE_CITY = new HandlerCity(primaryStage, dataGridPane);
+        handle_city = new HandlerCity(PRIMARY_STAGE, dataGridPane);
         
         //in pane 9 we can find the tabPane
         oldData= (Pane) dataGridPane.lookup("#pane9");
         //if i making a new req i remove the old one
         oldData.getChildren().clear();
         //i also remove all the old measurements collected
-        cityMeasure.clear();
+        CITY_MEASURE.clear();
         
         //i obtained the selected option
         typeOfRequestName=(String) comboBox.getSelectionModel().getSelectedItem().toString(); 
@@ -95,10 +94,10 @@ public class InitializeButtonBehaviour
         receivedDocument = CONNECT.makeRequest(path);
         //parse the received document
         ANALIZED_DOCUMENT.parseDocument(receivedDocument, measurements, 
-                                                          cityMeasure);
+                                                          CITY_MEASURE);
         
         //received (i received more than one set of measurements for each city)
-        HANDLE_CITY.pastCityValue(cityMeasure, typeOfRequestCode);   
+        handle_city.pastCityValue(CITY_MEASURE, typeOfRequestCode);   
     }
     
     
@@ -123,14 +122,14 @@ public class InitializeButtonBehaviour
         
         
         //init an handler city object
-        HANDLE_CITY = new HandlerCity(primaryStage, dataGridPane);
+        handle_city = new HandlerCity(PRIMARY_STAGE, dataGridPane);
         
         //in pane 9 we can find the tabPane
         oldData= (Pane) dataGridPane.lookup("#pane9");
         //if i making a new req i remove the old one
         oldData.getChildren().clear();
         //i also remove all the old measurements collected
-        cityMeasure.clear();
+        CITY_MEASURE.clear();
         
         //set the path
         //h--> type=hourly. In this case is the only possible choice
@@ -139,10 +138,10 @@ public class InitializeButtonBehaviour
         receivedDocument = CONNECT.makeRequest(path);
         //parse the received response
         ANALIZED_DOCUMENT.parseDocument(receivedDocument,measurements,
-                                                         cityMeasure);
+                                                         CITY_MEASURE);
         
-        //i add an actual single city---> i add a textual tab with all the value 
-        //received (i received one set of measurements for each city)
-        HANDLE_CITY.actualCityValue(cityMeasure);
+        /*i add an actual single city---> i add a textual tab with all the value 
+        received (i received one set of measurements for each city)*/
+        handle_city.actualCityValue(CITY_MEASURE);
     }
 }

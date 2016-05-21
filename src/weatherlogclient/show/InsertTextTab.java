@@ -1,3 +1,9 @@
+/******************************************************************************
+ *
+ * @author ChiaraCaiazza
+ * @author GionatanGallo
+ * 
+ *****************************************************************************/
 package weatherlogclient.show;
 
 
@@ -14,7 +20,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-
 
 
 public class InsertTextTab 
@@ -178,8 +183,6 @@ public class InsertTextTab
                 Logger.getLogger(InsertTextTab.class.getName()).log(Level.SEVERE, 
                                                                     null, ex);
             }
-            
-            //calendar.add(Calendar.HOUR_OF_DAY, 7);
             
             text1.setText(name+" "+calendar.get(Calendar.DAY_OF_MONTH)+"/"+
                     (calendar.get(Calendar.MONTH)+1)+"/"+calendar.get(Calendar.YEAR)

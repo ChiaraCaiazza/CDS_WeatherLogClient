@@ -11,10 +11,13 @@ import java.io.File;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import weatherlogclient.connections.ServerConnection;
 
 import weatherlogclient.initialize.InitializeData;
 import weatherlogclient.initialize.InitializeElements;
@@ -56,7 +59,7 @@ public class WeatherLogClient extends Application
         //start to retrieve the fist data about:
         // - list of cities 
         // - list of measures
-        INIT_DATA.startDataInitialization();
+        INIT_DATA.startDataInitialization();  
     }
     
     
@@ -77,6 +80,10 @@ public class WeatherLogClient extends Application
         primaryStage.setMinHeight(550);
         primaryStage.setWidth(1200);
         primaryStage.show();
+        
+         primaryStage.setOnCloseRequest((WindowEvent we) -> {
+            ServerConnection.closeConnection();
+        });
         
         //initialize the content of the root grid adding 3 row and 3 column
         INIT_ELEMENTS.setGrid(primaryStage, homeGridPane);

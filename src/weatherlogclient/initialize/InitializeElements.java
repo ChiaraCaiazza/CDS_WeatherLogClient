@@ -32,6 +32,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import weatherlogclient.connections.ServerConnection;
 
 
 public class InitializeElements 
@@ -39,15 +40,13 @@ public class InitializeElements
     GridPane dataGridPane, homeGridPane;
     Stage primaryStage;
     
-    private InitializeButtonBehaviour INIT_BUTTON;
+    private InitializeButtonBehaviour initButton;
     private MenuItem contactUs, an ,insp, backToHome, exitApplication;
     private ObservableList<String> citiesNameList;
     private ObservableList<String> measuresNameList;
 
     
-    public InitializeElements()
-    {
-    }
+    public InitializeElements() {}
     
     
     /**************************************************************************
@@ -64,7 +63,7 @@ public class InitializeElements
         ColumnConstraints col1, col2, col3;
         
         primaryStage=stage;
-        INIT_BUTTON= new InitializeButtonBehaviour(primaryStage);
+        initButton= new InitializeButtonBehaviour(primaryStage);
         /*create 3 Row:
             -   row1: navigation bar, 28px height;
             -   row2: title, 120 px height;
@@ -270,6 +269,7 @@ public class InitializeElements
         {
             //close the application window
             primaryStage.close();
+            ServerConnection.closeConnection();
         });
         
         
@@ -464,7 +464,7 @@ public class InitializeElements
                 //one (or more) cities were selected
                 if (!"".equals(who)) 
                 {
-                    INIT_BUTTON.analisysButtonBehaviour(measuresNameList, 
+                    initButton.analisysButtonBehaviour(measuresNameList, 
                                      dataGridPane, who, comboBox, typeName, typeCode);
                 }
             });
@@ -482,7 +482,7 @@ public class InitializeElements
                 //one (or more) cities were selected
                 if (!"".equals(who)) 
                 {
-                    INIT_BUTTON.inspectButtonBehaviour(measuresNameList,
+                    initButton.inspectButtonBehaviour(measuresNameList,
                                dataGridPane, who);
                 }
             });
@@ -554,7 +554,6 @@ public class InitializeElements
             who+=items.get(k);
             if  (k< (quanti-2))
             { 
-                
                 who +=",";
             }
             else

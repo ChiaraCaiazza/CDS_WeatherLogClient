@@ -1,16 +1,15 @@
-package weatherlogclient.show;
-/**
+/******************************************************************************
  *
  * @author ChiaraCaiazza
  * @author GionatanGallo
  * 
- */
+ *****************************************************************************/
+package weatherlogclient.show;
 
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-
 
 
 public class UtilCity
@@ -108,8 +107,6 @@ public class UtilCity
     
     /***************************************************************************
      * 
-     * @param base
-     * @param what
      * @param s suppose "abcdeFghi"
      * @return  "Abcdefghi"
      * 
@@ -173,6 +170,4 @@ public class UtilCity
         result=result.substring(index+1);        
         return result;
     }
-    
-    
 }

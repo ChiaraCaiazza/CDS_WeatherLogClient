@@ -1,3 +1,9 @@
+/******************************************************************************
+ *
+ * @author ChiaraCaiazza
+ * @author GionatanGallo
+ * 
+ *****************************************************************************/
 package weatherlogclient.show;
 
 import java.util.HashMap;
@@ -15,17 +21,17 @@ import javafx.stage.Stage;
 public class HandlerCity 
 {
     protected GridPane dataGridPane;
-    private final Stage primaryStage;
+    private final Stage PRIMARY_STAGE;
+    private final InsertTextTab INSERT_TEXT_TAB;
+    private final InsertGraph INSERTGRAPH;
+    private final UtilCity UTIL;
     
     protected Pane elementRootPane;
     protected TabPane root;
     protected Pane newPane;
     
-    private final InsertTextTab INSERT_TEXT_TAB;
-    private final InsertGraph INSERTGRAPH;
-    private final UtilCity UTIL;
-    
     private LinkedList<LinkedList> allData;
+    
     
     public HandlerCity(Stage stage, GridPane gridPane)
     {
@@ -33,7 +39,7 @@ public class HandlerCity
         INSERTGRAPH=new InsertGraph(stage);
         UTIL=new UtilCity();
         
-        primaryStage=stage;
+        PRIMARY_STAGE=stage;
         dataGridPane=gridPane;
     }
     
@@ -47,7 +53,7 @@ public class HandlerCity
      * function show a tex tab plus a tab (containing a bar graph) for each
      * measure received.
      * 
-     */
+     **************************************************************************/
     public void actualCityValue(LinkedList<LinkedList> list)
     {
         LinkedList<String> propertyList, unitList;
@@ -99,12 +105,6 @@ public class HandlerCity
     }
     
     
-    /**************************************************************************
-     * 
-     * @param allDataList
-     * @param daily
-     * 
-     */
     public void pastCityValue(LinkedList<LinkedList> allDataList, String reqType)
     {
         LinkedList<LinkedList> temp;
@@ -149,7 +149,6 @@ public class HandlerCity
         
         //retrieve te list of property & the list of unit
         UTIL.retrievePropertyList(allData, propertyList, unitList);
-        System.out.println(propertyList+"  "+unitList);
         
         //for each property we create a graph
         while(!propertyList.isEmpty())
@@ -173,7 +172,7 @@ public class HandlerCity
      * The scrollPane have a single child newPane. This Pane will contain the
      * shown response.
      * 
-     */
+     *************************************************************************/
     protected void initTab(String subject)
     {
         ScrollPane scrollPane;
@@ -210,7 +209,7 @@ public class HandlerCity
      * 1) create a new Pane
      * 2)retrieve the information about the city name and append it
      * 
-     */
+     **************************************************************************/
     protected void insertCityName(Pane measurementPane, int index, LinkedList<HashMap> list)
     {
         String s;
