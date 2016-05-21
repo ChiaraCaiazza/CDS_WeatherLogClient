@@ -9,6 +9,8 @@ package weatherlogclient.connections;
 
 public class SetRequest 
 {
+    
+    
     /***************************************************************************
      * 
      * @param command   type of request performed [actual(a), hourly(h)
@@ -23,7 +25,5 @@ public class SetRequest
     public String constructPath(String command, String who)
     {
         return "weather/analysis?name="+who+"&type="+command;
-       
-    }
-    
+    } 
 }

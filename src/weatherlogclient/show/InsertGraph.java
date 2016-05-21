@@ -1,3 +1,9 @@
+/******************************************************************************
+ *
+ * @author ChiaraCaiazza
+ * @author GionatanGallo
+ * 
+ *****************************************************************************/
 package weatherlogclient.show;
 
 import java.text.ParseException;
@@ -12,29 +18,24 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Side;
-import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
-
-
 
 
 public class InsertGraph 
 {
     private final UtilCity UTIL;
-    private final Stage root;
+    private final Stage ROOT;
+    
     
     public InsertGraph(Stage stage)
     {
         UTIL=new UtilCity();
-        root=stage;
+        ROOT=stage;
     }
     
     
@@ -72,7 +73,6 @@ public class InsertGraph
         //BarChart
         StackedBarChart<String,Number> barChart = new StackedBarChart<>(xAxis,yAxis);
         barChart.setTitle(UTIL.onlyFirstUp(propertyName));
-        //barChart.setCategoryGap(60);
         barChart.getStyleClass().add("chartStyle");
         barChart.setLegendSide(Side.RIGHT);
         
@@ -82,12 +82,12 @@ public class InsertGraph
         updateTranslateY(null, barChart);
         
         //when the window width change optimize the translateX property
-        root.widthProperty().addListener((obs)->
+        ROOT.widthProperty().addListener((obs)->
         {
             Platform.runLater(()->updateTranslateX(null, barChart));
         });
         //when the window height change optimize the translateY property
-        root.heightProperty().addListener((obs)->
+        ROOT.heightProperty().addListener((obs)->
         {
             Platform.runLater(()->updateTranslateY(null, barChart));
         });
@@ -122,33 +122,29 @@ public class InsertGraph
      * @param measure
      * @param PropertyName
      * 
-     * insert a bar into a BarChart
+     * insert a single bar into a BarChart
      * 
-     */
+     ************************************************************************/
     protected void insertABarSerie(StackedBarChart<String, Number> barChart, 
                    int i, HashMap<String,String> measure, String PropertyName)
     {
-        String s;
-        int index;
+        String s, s2;
         
         //cityName
         s=measure.get("cityName");
-        
         
         //add a serie
         XYChart.Series serie = new XYChart.Series();
         serie.setName(s); 
         
         //retrieve the data
-        String s2=measure.get(PropertyName);
+        s2=measure.get(PropertyName);
         s2=UTIL.retrieveBefore(s2, "_");
         
-
         //add the bar
         serie.getData().add(new XYChart.Data(s, Double.parseDouble(s2.replace(",", "."))));
         //append the bar
         barChart.getData().addAll(serie);
-        
     }  
         
     
@@ -170,14 +166,6 @@ public class InsertGraph
     }
     
     
-    /***************************************************************************
-     * 
-     * @param propertyName
-     * @param propertyUnit
-     * @param thisCityHandler 
-     * @param allCityMeasurements 
-     * @param daily 
-     */
     protected void createLineGraphTabMultipleCity(String propertyName,
                                  String propertyUnit,HandlerCity thisCityHandler,
                                  LinkedList<LinkedList> allCityMeasurements, 
@@ -217,8 +205,6 @@ public class InsertGraph
 
 
                     hour=c.get(Calendar.HOUR_OF_DAY);
-                    day = c.get(Calendar.DAY_OF_MONTH);
-                    month = c.get(Calendar.MONTH)+1;
 
                     xValuesTemp.add(hour+":00");
                     millisecond = c.getTimeInMillis();
@@ -228,7 +214,6 @@ public class InsertGraph
                 break;
                 
            case "w":
-                millisecond = c.getTimeInMillis();
                 
                 for (int i=0; i<28; i++)
                 {                
@@ -247,7 +232,6 @@ public class InsertGraph
             case "m":
                 for (int i=0; i<30; i++)
                 {                
-                    hour=c.get(Calendar.HOUR_OF_DAY);
                     day = c.get(Calendar.DAY_OF_MONTH);
                     month = c.get(Calendar.MONTH)+1;
 
@@ -287,12 +271,12 @@ public class InsertGraph
         updateTranslateY(lineChart, null);
         
         //when the window width change optimize the translateX property
-        root.widthProperty().addListener((obs)->
+        ROOT.widthProperty().addListener((obs)->
         {
             Platform.runLater(()->updateTranslateX(lineChart, null));
         });
         //when the window height change optimize the translateY property
-        root.heightProperty().addListener((obs)->
+        ROOT.heightProperty().addListener((obs)->
         {
             Platform.runLater(()->updateTranslateY(lineChart, null));
         });
@@ -315,11 +299,7 @@ public class InsertGraph
             //draw a single line
             insertASingleLineSerieMultipleCity(lineChart,i, propertyName, s,
                                                allCityMeasurements, reqType);
-        
-           
         }
-        
-        
         //append
         thisCityHandler.newPane.getChildren().add(lineChart);
     }
@@ -329,7 +309,7 @@ public class InsertGraph
         double xSpace;
         
         //the available white space
-        xSpace=(root.getWidth()*90/100)-1000;
+        xSpace=(ROOT.getWidth()*90/100)-1000;
         
         // if some white space is available translate the graph
         if (xSpace>0)
@@ -353,7 +333,7 @@ public class InsertGraph
         double ySpace; 
         
         //the available white space
-        ySpace = (root.getHeight()*95/100) - 180 - 350;
+        ySpace = (ROOT.getHeight()*95/100) - 180 - 350;
                
         // if some white space is available translate the graph
         if (ySpace>0)
@@ -384,8 +364,7 @@ public class InsertGraph
         {
             //all reguarding the i-th city
             measures=allCityMeasurements.get(i);
-        
-        
+       
             //for each measure of this city 
            for (int j=measures.size()-1;j>=0 ;j--)
            {
@@ -403,7 +382,7 @@ public class InsertGraph
                 
                 double thisValue=Double.parseDouble(value.replace(",", "."));
                 
-                if (bounds.size() ==0)
+                if (bounds.isEmpty())
                 {
                     bounds.put("lowerBound", thisValue);
                     bounds.put("upperBound", thisValue);
@@ -412,12 +391,10 @@ public class InsertGraph
                     bounds.put("lowerBound", thisValue);
                 if ( bounds.get("upperBound") < thisValue )
                     bounds.put("upperBound", thisValue);
-                
             }
-        
         }
-   
     }
+    
     
     protected void insertASingleLineSerieMultipleCity(LineChart<String, Number> lineChart, 
                                      int i, String propertyName, String cityName,
@@ -429,7 +406,6 @@ public class InsertGraph
         String value,newPoint;
         SimpleDateFormat  simpleDate;
         Calendar calendar;
-        Date d;
         
         //all reguarding the i-th city
         measures=allCityMeasurements.get(i);
@@ -456,7 +432,7 @@ public class InsertGraph
                 
                 //UTC date string
                 newPoint=measure.get("date");
-                simpleDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                simpleDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
                 calendar=Calendar.getInstance();
                 try 
                 {
@@ -496,7 +472,6 @@ public class InsertGraph
                 //add them to the serie            
                 series.getData().add(new XYChart.Data(newPoint, 
                                  thisValue));
-                System.out.println("Punto - "+ newPoint + "-" +thisValue);
             }
         }
         lineChart.getData().add(series);
