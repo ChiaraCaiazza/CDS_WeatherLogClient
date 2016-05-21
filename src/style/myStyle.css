@@ -9,34 +9,34 @@
 
 
 /*******************************************************************************
-                    Style related to the main window
+                        main window
 *******************************************************************************/
 
-/* style related to the root background*/
+/*root background*/
 #backgroundStyle_root, #backgroundStyle_popup
 {
    -fx-background-image:    url("images/background_root.png");
 }
 
-/* style related to the data GridPane*/
+/*data GridPane*/
 .backgroundStyle_data
 {
     -fx-background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* style related to the city column background*/
+/* city column background*/
 .backgroundStyle_cityColumn
 {
     -fx-background-color: rgba( 0, 0, 0, 0.40);
 }
 
-/* style related to the response column background*/
+/* response column background*/
 .backgroundStyle_responseColumn
 {  
     -fx-background-color: rgba(0, 0, 0, 0.25);
 }
 
-/* style related to the navigation  window*/
+/* navigation window*/
 .navigationBar
 {
     -fx-min-width:          100%;
@@ -44,28 +44,28 @@
     -fx-max-height:         28;
 }
 
-/* style related to the application title*/
+/* application title*/
 .applicationTitle
 {
     -fx-min-height:         150;
     -fx-max-height:         150;
 }
 
-/* style related to the popup window*/
+/* popup window*/
 #popupText
 {
     -fx-font:               20px Calibri;
     -fx-fill:               #c0c0c0;
 }
 
-/* style related to the text of the home data pane*/
+/* home data pane text*/
 .homeText
 {
     -fx-font:               30px Calibri;
     -fx-fill:               #c0c0c0;
 }
 
-/* style related to the bold text of the home data pane*/
+/* bold text of the home data pane*/
 .homeTextBold
 {
     -fx-font:               30px Calibri;
@@ -73,7 +73,7 @@
     -fx-font-weight:        BOLD;
 }
 
-/* style related to the text contained into the city column*/
+/* text contained into the city column*/
 .cityText
 {
     -fx-font:               30px Calibri;
@@ -81,7 +81,7 @@
     -fx-text-fill:          #c0c0c0;
 }
 
-/* style related to the two choiceBox*/
+/* choiceBox*/
 #typeComboBoxStyle
 {
     -fx-min-width:          200px;
@@ -89,7 +89,7 @@
     -fx-background-color:   #f4fffc;
 }
 
-/*style for the button*/
+/*button*/
 #buttonStyle
 {
     -fx-min-width:          102px;
@@ -99,7 +99,7 @@
     -fx-text-fill:          black;
 }
 
-/*style related to small button*/
+/*small button*/
 #smallAddButtonStyle, #smallRemoveButtonStyle
 {
     -fx-min-width:          80px;
@@ -109,7 +109,7 @@
     -fx-text-fill:          black; 
 }
 
-/*Style related to the cityListView*/
+/*cityListView*/
 #cityListViewStyle
 {
     -fx-background-color:   #f4fffc;
@@ -122,17 +122,17 @@
 
 
 /*******************************************************************************
-                  Style related to the Tab
+                                    Tab
 *******************************************************************************/
 
-/* style related to the root background*/
+/* root background*/
 #backgroundStyle_Tab
 {
    -fx-font-size :          18;
    -fx-font-weight:         bold;
 }
 
-/*style related to the textual tab*/
+/*textual tab*/
 #cityTitle
 {
     -fx-font:               60px Calibri;
@@ -142,7 +142,7 @@
 
 
 /*******************************************************************************
-                  Style related to the Graph
+                                Graph
 *******************************************************************************/
 
 .chart-title 
@@ -152,7 +152,7 @@
   -fx-font-weight:          bolder;
 }
 
-/* style related to the chart*/
+/* chart*/
 .chartStyle
 {
     -fx-min-width:          800;

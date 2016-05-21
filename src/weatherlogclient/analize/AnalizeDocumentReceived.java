@@ -41,9 +41,8 @@ public class AnalizeDocumentReceived
      * @param citiesName
      * @param citiesId
      * 
-     * call at the initialization in order to set the environment in a proper
-     * way.
-     * analize an xml string contained the list of available citis
+     * At the initialization, set the environment in a proper way.
+     * Analize an xml string contained the list of available cities
      * 
      ***************************************************************************/
     public void analizeReicevedCity(Document receivedDocument, ObservableList<String> citiesName, ObservableList<String> citiesId)
@@ -79,8 +78,7 @@ public class AnalizeDocumentReceived
      * @param measurementsName
      * @param measurementsId
      * 
-     * call at the initialization in order to set the environment in a proper
-     * way.
+     * At the initialization, set the environment in a proper way.
      * analize an xml string contained the list of measurements
      * 
      ***************************************************************************/
@@ -191,7 +189,6 @@ public class AnalizeDocumentReceived
                         cityD.add(singleMeasure);
                     } 
 
-                    String s;
                     singleMeasure.put(main.getAttribute("name"),value.getTextContent()
                                                         + '_'+unit.getTextContent() );
                     
