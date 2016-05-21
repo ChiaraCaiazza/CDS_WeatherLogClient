@@ -32,7 +32,7 @@ public class AnalizeDocumentReceived
     public AnalizeDocumentReceived()
     {
          CONNECT = new ServerConnection();
-     }
+    }
      
      
     /**************************************************************************
@@ -50,7 +50,6 @@ public class AnalizeDocumentReceived
     {       
         cityIdList=citiesId;
         cityNameList=citiesName;
-        
         
         //list of city elements
         NodeList nList = receivedDocument.getElementsByTagName("city");
@@ -137,17 +136,12 @@ public class AnalizeDocumentReceived
         LinkedList<HashMap> cityD;
         HashMap<String, String> singleMeasure;
         
-        /**************************************************************************************/
-        CONNECT.printDoc(receivedDocument);
-        /**************************************************************************************/
         
         measurementsNameList=mesurements;
         cityMeasure=rootList;
         
         //list of city
         cities = receivedDocument.getElementsByTagName("cityLog");
-        //how much of them?
-        System.out.println("# of city:  " + cities.getLength());
         
         //  for each city 
         for(int i = 0; i < cities.getLength(); i++)
@@ -160,41 +154,30 @@ public class AnalizeDocumentReceived
             
             cityD =new LinkedList<>();
             rootList.add(cityD);
-            //create a LinkedList and an HashMap 
-            //singleMeasure=retrieveList(cityID);
             
             //all the related measurement available for this city
             citiesMeasurement_group=city.getElementsByTagName("measurement_group");
             
             //for each measurement_group
-            int len1=citiesMeasurement_group.getLength();
             for (int j = 0;j < citiesMeasurement_group.getLength(); j++)
             {    
-                //Node measurement;
                 Element main, value, unit;  
                 
                 cityMeasurement_group = (Element) citiesMeasurement_group.item(j);
                 
                 updateTime=cityMeasurement_group.getAttribute("update");
                 
-                //create a LinkedList and an HashMap 
-                //singleMeasure=retrieveList(cityID);
-            
                 if (!cityMeasurement_group.hasChildNodes()) 
                     continue;
                 
                 citiesMeasurement=cityMeasurement_group.getElementsByTagName("measurement");
-                int len2=citiesMeasurement.getLength();
                 //for each measurement in a measurement group
                 singleMeasure = new HashMap<>();
                 for (int k = 0;k < citiesMeasurement.getLength(); k++)
                 { 
-                    
-                    
                     // this mesurement
                     cityMeasurement=(Element)citiesMeasurement.item(k);
 
-                
                     main=(Element) cityMeasurement.getChildNodes().item(0);
                     value=(Element) cityMeasurement.getChildNodes().item(1);
                     unit=(Element) cityMeasurement.getChildNodes().item(2);
@@ -214,7 +197,6 @@ public class AnalizeDocumentReceived
                     
                 }
             }
-            
         } 
     }
 }
